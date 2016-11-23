@@ -48,7 +48,7 @@
 
 	var React = __webpack_require__(1),
 	    ReactDOM = __webpack_require__(32),
-	    Component = __webpack_require__(166);
+	    Paginator = __webpack_require__(166);
 
 	var pageSizes = [5, 10, 20, 50, 100, 250, 500, 1000, 'all items'];
 
@@ -80,7 +80,7 @@
 
 	var renderPaginator = function renderPaginator() {
 	    console.warn(props);
-	    ReactDOM.render(React.createElement(Component, props), document.getElementById("component-container"));
+	    ReactDOM.render(React.createElement(Paginator, props), document.getElementById("component-container"));
 	};
 
 	renderPaginator();

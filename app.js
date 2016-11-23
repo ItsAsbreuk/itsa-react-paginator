@@ -2,7 +2,7 @@
 
 const React = require("react"),
     ReactDOM = require("react-dom"),
-    Component = require("./lib/component-styled.jsx");
+    Paginator = require("./lib/component-styled.jsx");
 
 const pageSizes = [5, 10, 20, 50, 100, 250, 500, 1000, 'all items'];
 
@@ -36,7 +36,7 @@ let props = {
 const renderPaginator = () => {
     console.warn(props);
     ReactDOM.render(
-        <Component {...props} />,
+        <Paginator {...props} />,
         document.getElementById("component-container")
     );
 };
