@@ -1,0 +1,29 @@
+.itsa-paginator {
+
+    .select-sizes {
+        display: inline-block;
+
+        .itsa-select {
+            margin: 0 1em 0 0.5em;
+            display: inline-block;
+            height: 2.5em;
+            vertical-align: middle;
+            width: auto;
+
+            ul {
+                padding-right: 0.3em;
+            }
+
+            >button {
+                padding-left: 0.65em !important;
+                padding-right: 2em !important;
+            }
+        }
+    }
+
+    .itsa-button {
+        min-width: 2.5em;
+        height: 2.5em;
+        vertical-align: middle;
+    }
+}

@@ -1,0 +1,208 @@
+{
+    "project": {
+        "name": "itsa-react-paginator",
+        "description": "React-Component: Paginator",
+        "logo": "https://avatars0.githubusercontent.com/u/8314644?v=3&s=84",
+        "version": "0.0.1"
+    },
+    "files": {
+        "lib/component.jsx": {
+            "name": "lib/component.jsx",
+            "modules": {
+                "component.jsx": 1
+            },
+            "classes": {
+                "Component": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "component.jsx": {
+            "name": "component.jsx",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "Component": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "lib/component.jsx",
+            "line": 3,
+            "description": "Description here\n\n\n\n<i>Copyright (c) 2016 ItsAsbreuk - http://itsasbreuk.nl</i><br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "since": "15.0.0"
+        }
+    },
+    "classes": {
+        "Component": {
+            "name": "Component",
+            "shortname": "Component",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "component.jsx",
+            "namespace": "",
+            "file": "lib/component.jsx",
+            "line": 3,
+            "description": "Description here\n\n\n\n<i>Copyright (c) 2016 ItsAsbreuk - http://itsasbreuk.nl</i><br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "lib/component.jsx",
+            "line": 28,
+            "description": "How many items are shown on a page. This value is needed to generate the pagebuttons.\nWhen not set, all items are supposed to be shown on a single page.",
+            "itemtype": "property",
+            "name": "itemsPerPage",
+            "type": "Number",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 38,
+            "description": "The message before the `itemsPerPage` selector",
+            "itemtype": "property",
+            "name": "itemsPerPageMsg",
+            "type": "String",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 47,
+            "description": "The callback whenever a page is changed.\nThe callback gets 1 argument --> newPage, which is the pagenumber (starting at 1).",
+            "itemtype": "property",
+            "name": "onChange",
+            "type": "Function",
+            "required": 1,
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 58,
+            "description": "The callback whenever a page is changed.\nThe callback get1 1 argument --> newIndex, which is the selected index within the property `pageSizes`.",
+            "itemtype": "property",
+            "name": "onChangePageSize",
+            "type": "Function",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 68,
+            "description": "The current pagenumber (starting at 1).",
+            "itemtype": "property",
+            "name": "page",
+            "type": "Number",
+            "required": 1,
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 78,
+            "description": "The pageSizes. In order to wotk well with `onChangePageSize`, it is recomended to fill this array with `numbers`.\nIn this case, the callback can pick up the number straight ahead and pass it into `itemsPerPage` at once.",
+            "itemtype": "property",
+            "name": "pageSizes",
+            "type": "Array",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 88,
+            "description": "The tabIndex. All sub-items will get this same tabindex.",
+            "itemtype": "property",
+            "name": "tabIndex",
+            "type": "Number",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 97,
+            "description": "The Total itemcount of the array where the paginator relates to. This number is used to calculate and generate the buttons.",
+            "itemtype": "property",
+            "name": "totalItems",
+            "type": "Number",
+            "required": 1,
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 108,
+            "description": "The initial props.",
+            "itemtype": "method",
+            "name": "getDefaultProps",
+            "return": {
+                "description": "Object"
+            },
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 121,
+            "description": "Will reset the current `page`, by calling the callback `props.onChange`.",
+            "itemtype": "method",
+            "name": "gotoPage",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 131,
+            "description": "Will set the `itemsPerPage`, by calling the callback `props.onChangePageSize`.",
+            "itemtype": "method",
+            "name": "gotoPage",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 141,
+            "description": "Renders the `select-sizes` Select-Component.",
+            "itemtype": "method",
+            "name": "renderSelectSizes",
+            "return": {
+                "description": "ReactComponent"
+            },
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 169,
+            "description": "React render-method --> renderes the Component.",
+            "itemtype": "method",
+            "name": "render",
+            "return": {
+                "description": "ReactComponent"
+            },
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        }
+    ],
+    "warnings": []
+}

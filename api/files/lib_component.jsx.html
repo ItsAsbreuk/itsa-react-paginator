@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib/component.jsx - itsa-react-paginator</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="https://avatars0.githubusercontent.com/u/8314644?v=3&amp;s=84" title="itsa-react-paginator"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Component.html">Component</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/component.jsx.html">component.jsx</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: lib/component.jsx</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+/**
+ * Description here
+ *
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2016 ItsAsbreuk - http://itsasbreuk.nl&lt;/i&gt;&lt;br&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module component.jsx
+ * @class Component
+ * @since 15.0.0
+*/
+
+const React = require(&quot;react&quot;),
+    PropTypes = React.PropTypes,
+    Button = require(&quot;itsa-react-button&quot;),
+    ToggleButton = require(&quot;itsa-react-togglebutton&quot;),
+    Select = require(&quot;itsa-react-select&quot;),
+    MAIN_CLASS = &quot;itsa-paginator&quot;,
+    FORM_ELEMENT_CLASS_SPACES = &quot; itsa-formelement&quot;;
+
+const Paginator = React.createClass({
+
+    propTypes: {
+        /**
+         * How many items are shown on a page. This value is needed to generate the pagebuttons.
+         * When not set, all items are supposed to be shown on a single page.
+         *
+         * @property itemsPerPage
+         * @type Number
+         * @since 15.0.0
+        */
+        itemsPerPage: PropTypes.number,
+
+        /**
+         * The message before the &#x60;itemsPerPage&#x60; selector
+         *
+         * @property itemsPerPageMsg
+         * @type String
+         * @since 15.0.0
+        */
+        itemsPerPageMsg: PropTypes.string,
+
+        /**
+         * The callback whenever a page is changed.
+         * The callback gets 1 argument --&gt; newPage, which is the pagenumber (starting at 1).
+         *
+         * @property onChange
+         * @type Function
+         * @required
+         * @since 15.0.0
+        */
+        onChange: PropTypes.func.isRequired,
+
+        /**
+         * The callback whenever a page is changed.
+         * The callback get1 1 argument --&gt; newIndex, which is the selected index within the property &#x60;pageSizes&#x60;.
+         *
+         * @property onChangePageSize
+         * @type Function
+         * @since 15.0.0
+        */
+        onChangePageSize: PropTypes.func,
+
+        /**
+         * The current pagenumber (starting at 1).
+         *
+         * @property page
+         * @type Number
+         * @required
+         * @since 15.0.0
+        */
+        page: PropTypes.number.isRequired,
+
+        /**
+         * The pageSizes. In order to wotk well with &#x60;onChangePageSize&#x60;, it is recomended to fill this array with &#x60;numbers&#x60;.
+         * In this case, the callback can pick up the number straight ahead and pass it into &#x60;itemsPerPage&#x60; at once.
+         *
+         * @property pageSizes
+         * @type Array
+         * @since 15.0.0
+        */
+        pageSizes: PropTypes.array,
+
+        /**
+         * The tabIndex. All sub-items will get this same tabindex.
+         *
+         * @property tabIndex
+         * @type Number
+         * @since 15.0.0
+        */
+        tabIndex: PropTypes.number,
+
+        /**
+         * The Total itemcount of the array where the paginator relates to. This number is used to calculate and generate the buttons.
+         *
+         * @property totalItems
+         * @type Number
+         * @required
+         * @since 15.0.0
+        */
+        totalItems: PropTypes.number.isRequired
+    },
+
+    /**
+     * The initial props.
+     *
+     * @method getDefaultProps
+     * @return Object
+     * @since 15.0.0
+     */
+    getDefaultProps() {
+        return {
+            itemsPerPageMsg: &#x27;items per page&#x27;
+        };
+    },
+
+    /**
+     * Will reset the current &#x60;page&#x60;, by calling the callback &#x60;props.onChange&#x60;.
+     *
+     * @method gotoPage
+     * @since 15.0.0
+     */
+    gotoPage(page) {
+        this.props.onChange(page);
+    },
+
+    /**
+     * Will set the &#x60;itemsPerPage&#x60;, by calling the callback &#x60;props.onChangePageSize&#x60;.
+     *
+     * @method gotoPage
+     * @since 15.0.0
+     */
+    changePageSize(newIndex) {
+        this.props.onChangePageSize(newIndex);
+    },
+
+    /**
+     * Renders the &#x60;select-sizes&#x60; Select-Component.
+     *
+     * @method renderSelectSizes
+     * @return ReactComponent
+     * @since 15.0.0
+     */
+    renderSelectSizes() {
+        const props = this.props,
+            pageSizes = props.pageSizes,
+            pageSizesSize = pageSizes.length-1;
+        let selected = pageSizes.indexOf(props.itemsPerPage);
+
+        if ((selected===-1) &amp;&amp; (typeof pageSizes[pageSizesSize]===&#x27;string&#x27;)) {
+            selected = pageSizesSize;
+        }
+        return (
+            &lt;div className=&quot;select-sizes&quot; key=&quot;select-sizes&quot;&gt;
+                {props.itemsPerPageMsg}
+                &lt;Select
+                    items={pageSizes.map(item =&gt; item.toString())}
+                    onChange={this.changePageSize}
+                    selected={selected}
+                    tabIndex={props.tabIndex} /&gt;
+            &lt;/div&gt;
+        );
+    },
+
+    /**
+     * React render-method --&gt; renderes the Component.
+     *
+     * @method render
+     * @return ReactComponent
+     * @since 15.0.0
+     */
+    render() {
+        let classname = MAIN_CLASS+FORM_ELEMENT_CLASS_SPACES,
+            btnFirst, btnPrevious, btnNext, btnLast, btn1, btn2, btn3, btn4, btn5,
+            startGotoBtn, gotoBtn1, gotoBtn2, gotoBtn3, gotoBtn4, gotoBtn5, selectSizes;
+
+        const instance = this,
+            props = instance.props,
+            pageSizes = props.pageSizes,
+            tabIndex = props.tabIndex,
+            itemsPerPage = props.itemsPerPage,
+            totalItems = props.totalItems,
+            maxPage = itemsPerPage ? Math.ceil(totalItems/(itemsPerPage || 1)) : 1,
+            page = Math.min(maxPage, Math.max(1, props.page)),
+            prevPage = Math.max(1, page-1),
+            nextPage = Math.min(maxPage, page+1),
+            isFirstPage = page===1,
+            isLastPage = page===maxPage;
+
+        if (pageSizes &amp;&amp; (pageSizes.length&gt;0)) {
+            selectSizes = instance.renderSelectSizes();
+        }
+
+        btnFirst = (
+            &lt;Button
+                buttonHTML=&quot;&amp;Lt;&quot;
+                disabled={isFirstPage}
+                key=&quot;first&quot;
+                onClick={instance.gotoPage.bind(instance, 1)}
+                tabIndex={tabIndex} /&gt;
+        );
+        btnPrevious = (
+            &lt;Button
+                buttonHTML=&quot;&amp;lt;&quot;
+                disabled={isFirstPage}
+                key=&quot;previous&quot;
+                onClick={instance.gotoPage.bind(instance, prevPage)}
+                tabIndex={tabIndex} /&gt;
+        );
+        btnNext = (
+            &lt;Button
+                buttonHTML=&quot;&amp;gt;&quot;
+                disabled={isLastPage}
+                key=&quot;next&quot;
+                onClick={instance.gotoPage.bind(instance, nextPage)}
+                tabIndex={tabIndex} /&gt;
+        );
+        btnLast = (
+            &lt;Button
+                buttonHTML=&quot;&amp;Gt;&quot;
+                disabled={isLastPage}
+                key=&quot;last&quot;
+                onClick={instance.gotoPage.bind(instance, maxPage)}
+                tabIndex={tabIndex} /&gt;
+        );
+        startGotoBtn = page-2;
+        (startGotoBtn&gt;maxPage-4) &amp;&amp; (startGotoBtn=maxPage-4);
+        (startGotoBtn&lt;1) &amp;&amp; (startGotoBtn=1);
+        gotoBtn1 = startGotoBtn;
+        gotoBtn2 = startGotoBtn+1;
+        gotoBtn3 = startGotoBtn+2;
+        gotoBtn4 = startGotoBtn+3;
+        gotoBtn5 = startGotoBtn+4;
+        btn1 = (
+            &lt;ToggleButton
+                buttonText={gotoBtn1.toString()}
+                key=&quot;1&quot;
+                onChange={instance.gotoPage.bind(instance, gotoBtn1, 1)}
+                pressed={page===gotoBtn1}
+                tabIndex={tabIndex} /&gt;
+        );
+        if (maxPage&gt;1) {
+            btn2 = (
+                &lt;ToggleButton
+                    buttonText={gotoBtn2.toString()}
+                    key=&quot;2&quot;
+                    onChange={instance.gotoPage.bind(instance, gotoBtn2, 2)}
+                    pressed={page===gotoBtn2}
+                    tabIndex={tabIndex} /&gt;
+            );
+        }
+        if (maxPage&gt;2) {
+            btn3 = (
+                &lt;ToggleButton
+                    buttonText={gotoBtn3.toString()}
+                    key=&quot;3&quot;
+                    onChange={instance.gotoPage.bind(instance, gotoBtn3, 3)}
+                    pressed={page===gotoBtn3}
+                    tabIndex={tabIndex} /&gt;
+            );
+        }
+        if (maxPage&gt;3) {
+            btn4 = (
+                &lt;ToggleButton
+                    buttonText={gotoBtn4.toString()}
+                    key=&quot;4&quot;
+                    onChange={instance.gotoPage.bind(instance, gotoBtn4, 4)}
+                    pressed={page===gotoBtn4}
+                    tabIndex={tabIndex} /&gt;
+            );
+        }
+        if (maxPage&gt;4) {
+            btn5 = (
+                &lt;ToggleButton
+                    buttonText={gotoBtn5.toString()}
+                    key=&quot;5&quot;
+                    onChange={instance.gotoPage.bind(instance, gotoBtn5, 5)}
+                    pressed={page===gotoBtn5}
+                    tabIndex={tabIndex} /&gt;
+            );
+        }
+        return (
+            &lt;div className={classname} &gt;
+                {selectSizes}
+                {btnFirst}
+                {btnPrevious}
+                {btn1}
+                {btn2}
+                {btn3}
+                {btn4}
+                {btn5}
+                {btnNext}
+                {btnLast}
+            &lt;/div&gt;
+        );
+    }
+
+});
+
+module.exports = Paginator;
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
