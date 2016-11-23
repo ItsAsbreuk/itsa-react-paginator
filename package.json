@@ -30,6 +30,10 @@
     "css": "./css",
     "lib": "./lib"
   },
+  "dependencies": {
+    "itsa-react-select": "^15.3.30",
+    "itsa-react-togglebutton": "^15.1.30"
+  },
   "peerDependencies": {
     "react": "^15.0.1",
     "react-dom": "^15.0.1"
@@ -83,9 +87,5 @@
       "android-browser/latest"
     ]
   },
-  "license": "BSD-3-Clause",
-  "dependencies": {
-    "itsa-react-select": "^15.3.29",
-    "itsa-react-togglebutton": "^15.1.30"
-  }
+  "license": "BSD-3-Clause"
 }
