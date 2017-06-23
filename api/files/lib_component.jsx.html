@@ -98,128 +98,48 @@
 */
 
 const React = require(&quot;react&quot;),
-    PropTypes = React.PropTypes,
+    PropTypes = require(&quot;prop-types&quot;),
     Button = require(&quot;itsa-react-button&quot;),
     ToggleButton = require(&quot;itsa-react-togglebutton&quot;),
     Select = require(&quot;itsa-react-select&quot;),
     MAIN_CLASS = &quot;itsa-paginator&quot;,
     FORM_ELEMENT_CLASS_SPACES = &quot; itsa-formelement&quot;;
 
-const Paginator = React.createClass({
-
-    propTypes: {
-        /**
-         * How many items are shown on a page. This value is needed to generate the pagebuttons.
-         * When not set, all items are supposed to be shown on a single page.
-         *
-         * @property itemsPerPage
-         * @type Number
-         * @since 15.0.0
-        */
-        itemsPerPage: PropTypes.number,
-
-        /**
-         * The message before the &#x60;itemsPerPage&#x60; selector
-         *
-         * @property itemsPerPageMsg
-         * @type String
-         * @since 15.0.0
-        */
-        itemsPerPageMsg: PropTypes.string,
-
-        /**
-         * The callback whenever a page is changed.
-         * The callback gets 1 argument --&gt; newPage, which is the pagenumber (starting at 1).
-         *
-         * @property onChange
-         * @type Function
-         * @required
-         * @since 15.0.0
-        */
-        onChange: PropTypes.func.isRequired,
-
-        /**
-         * The callback whenever a page is changed.
-         * The callback get1 1 argument --&gt; newIndex, which is the selected index within the property &#x60;pageSizes&#x60;.
-         *
-         * @property onChangePageSize
-         * @type Function
-         * @since 15.0.0
-        */
-        onChangePageSize: PropTypes.func,
-
-        /**
-         * The current pagenumber (starting at 1).
-         *
-         * @property page
-         * @type Number
-         * @required
-         * @since 15.0.0
-        */
-        page: PropTypes.number.isRequired,
-
-        /**
-         * The pageSizes. In order to wotk well with &#x60;onChangePageSize&#x60;, it is recomended to fill this array with &#x60;numbers&#x60;.
-         * In this case, the callback can pick up the number straight ahead and pass it into &#x60;itemsPerPage&#x60; at once.
-         *
-         * @property pageSizes
-         * @type Array
-         * @since 15.0.0
-        */
-        pageSizes: PropTypes.array,
-
-        /**
-         * The tabIndex. All sub-items will get this same tabindex.
-         *
-         * @property tabIndex
-         * @type Number
-         * @since 15.0.0
-        */
-        tabIndex: PropTypes.number,
-
-        /**
-         * The Total itemcount of the array where the paginator relates to. This number is used to calculate and generate the buttons.
-         *
-         * @property totalItems
-         * @type Number
-         * @required
-         * @since 15.0.0
-        */
-        totalItems: PropTypes.number.isRequired
-    },
-
-    /**
-     * The initial props.
-     *
-     * @method getDefaultProps
-     * @return Object
-     * @since 15.0.0
-     */
-    getDefaultProps() {
-        return {
-            itemsPerPageMsg: &#x27;items per page&#x27;
-        };
-    },
+class Paginator extends React.Component {
+    constructor(props) {
+        super(props);
+        const instance = this;
+        instance.gotoPage = instance.gotoPage.bind(instance);
+        instance.changePageSize = instance.changePageSize.bind(instance);
+        instance.renderSelectSizes = instance.renderSelectSizes.bind(instance);
+    }
 
     /**
      * Will reset the current &#x60;page&#x60;, by calling the callback &#x60;props.onChange&#x60;.
      *
      * @method gotoPage
+     * @param page {Number} the page that should be shown
+     * @param blur {Boolean} whether to blur the button
+     * @param e {Object} the eventobject
      * @since 15.0.0
      */
-    gotoPage(page) {
+    gotoPage(page, blur, e) {
         this.props.onChange(page);
-    },
+        if (blur &amp;&amp; e &amp;&amp; e.target) {
+            e.target.blur();
+        }
+    }
 
     /**
      * Will set the &#x60;itemsPerPage&#x60;, by calling the callback &#x60;props.onChangePageSize&#x60;.
      *
-     * @method gotoPage
+     * @method changePageSize
+     * @param newIndex {Number} the index of the array &#x60;this.props.pageSizes&#x60; that was selected
      * @since 15.0.0
      */
     changePageSize(newIndex) {
         this.props.onChangePageSize(newIndex);
-    },
+    }
 
     /**
      * Renders the &#x60;select-sizes&#x60; Select-Component.
@@ -239,7 +159,7 @@ const Paginator = React.createClass({
         }
         return (
             &lt;div className=&quot;select-sizes&quot; key=&quot;select-sizes&quot;&gt;
-                {props.itemsPerPageMsg}
+                {props.msgItemsPerPage}
                 &lt;Select
                     items={pageSizes.map(item =&gt; item.toString())}
                     onChange={this.changePageSize}
@@ -247,7 +167,7 @@ const Paginator = React.createClass({
                     tabIndex={props.tabIndex} /&gt;
             &lt;/div&gt;
         );
-    },
+    }
 
     /**
      * React render-method --&gt; renderes the Component.
@@ -257,16 +177,17 @@ const Paginator = React.createClass({
      * @since 15.0.0
      */
     render() {
-        let classname = MAIN_CLASS+FORM_ELEMENT_CLASS_SPACES,
-            btnFirst, btnPrevious, btnNext, btnLast, btn1, btn2, btn3, btn4, btn5,
+        let classname = MAIN_CLASS+FORM_ELEMENT_CLASS_SPACES, first, last, countOutOf,
+            btnFirst, btnPrevious, btnNext, btnLast, btn1, btn2, btn3, btn4, btn5, msg,
             startGotoBtn, gotoBtn1, gotoBtn2, gotoBtn3, gotoBtn4, gotoBtn5, selectSizes;
 
         const instance = this,
             props = instance.props,
+            propsClassName = props.className,
             pageSizes = props.pageSizes,
             tabIndex = props.tabIndex,
-            itemsPerPage = props.itemsPerPage,
             totalItems = props.totalItems,
+            itemsPerPage = props.itemsPerPage || totalItems,
             maxPage = itemsPerPage ? Math.ceil(totalItems/(itemsPerPage || 1)) : 1,
             page = Math.min(maxPage, Math.max(1, props.page)),
             prevPage = Math.max(1, page-1),
@@ -277,13 +198,13 @@ const Paginator = React.createClass({
         if (pageSizes &amp;&amp; (pageSizes.length&gt;0)) {
             selectSizes = instance.renderSelectSizes();
         }
-
+        propsClassName &amp;&amp; (classname+=&#x27; &#x27;+propsClassName);
         btnFirst = (
             &lt;Button
                 buttonHTML=&quot;&amp;Lt;&quot;
                 disabled={isFirstPage}
                 key=&quot;first&quot;
-                onClick={instance.gotoPage.bind(instance, 1)}
+                onClick={instance.gotoPage.bind(instance, 1, false)}
                 tabIndex={tabIndex} /&gt;
         );
         btnPrevious = (
@@ -291,7 +212,7 @@ const Paginator = React.createClass({
                 buttonHTML=&quot;&amp;lt;&quot;
                 disabled={isFirstPage}
                 key=&quot;previous&quot;
-                onClick={instance.gotoPage.bind(instance, prevPage)}
+                onClick={instance.gotoPage.bind(instance, prevPage, false)}
                 tabIndex={tabIndex} /&gt;
         );
         btnNext = (
@@ -299,7 +220,7 @@ const Paginator = React.createClass({
                 buttonHTML=&quot;&amp;gt;&quot;
                 disabled={isLastPage}
                 key=&quot;next&quot;
-                onClick={instance.gotoPage.bind(instance, nextPage)}
+                onClick={instance.gotoPage.bind(instance, nextPage, false)}
                 tabIndex={tabIndex} /&gt;
         );
         btnLast = (
@@ -307,7 +228,7 @@ const Paginator = React.createClass({
                 buttonHTML=&quot;&amp;Gt;&quot;
                 disabled={isLastPage}
                 key=&quot;last&quot;
-                onClick={instance.gotoPage.bind(instance, maxPage)}
+                onClick={instance.gotoPage.bind(instance, maxPage, false)}
                 tabIndex={tabIndex} /&gt;
         );
         startGotoBtn = page-2;
@@ -321,8 +242,9 @@ const Paginator = React.createClass({
         btn1 = (
             &lt;ToggleButton
                 buttonText={gotoBtn1.toString()}
+                disabled={totalItems===0}
                 key=&quot;1&quot;
-                onChange={instance.gotoPage.bind(instance, gotoBtn1, 1)}
+                onChange={instance.gotoPage.bind(instance, gotoBtn1, true)}
                 pressed={page===gotoBtn1}
                 tabIndex={tabIndex} /&gt;
         );
@@ -331,7 +253,7 @@ const Paginator = React.createClass({
                 &lt;ToggleButton
                     buttonText={gotoBtn2.toString()}
                     key=&quot;2&quot;
-                    onChange={instance.gotoPage.bind(instance, gotoBtn2, 2)}
+                    onChange={instance.gotoPage.bind(instance, gotoBtn2, true)}
                     pressed={page===gotoBtn2}
                     tabIndex={tabIndex} /&gt;
             );
@@ -341,7 +263,7 @@ const Paginator = React.createClass({
                 &lt;ToggleButton
                     buttonText={gotoBtn3.toString()}
                     key=&quot;3&quot;
-                    onChange={instance.gotoPage.bind(instance, gotoBtn3, 3)}
+                    onChange={instance.gotoPage.bind(instance, gotoBtn3, true)}
                     pressed={page===gotoBtn3}
                     tabIndex={tabIndex} /&gt;
             );
@@ -351,7 +273,7 @@ const Paginator = React.createClass({
                 &lt;ToggleButton
                     buttonText={gotoBtn4.toString()}
                     key=&quot;4&quot;
-                    onChange={instance.gotoPage.bind(instance, gotoBtn4, 4)}
+                    onChange={instance.gotoPage.bind(instance, gotoBtn4, true)}
                     pressed={page===gotoBtn4}
                     tabIndex={tabIndex} /&gt;
             );
@@ -361,28 +283,199 @@ const Paginator = React.createClass({
                 &lt;ToggleButton
                     buttonText={gotoBtn5.toString()}
                     key=&quot;5&quot;
-                    onChange={instance.gotoPage.bind(instance, gotoBtn5, 5)}
+                    onChange={instance.gotoPage.bind(instance, gotoBtn5, true)}
                     pressed={page===gotoBtn5}
                     tabIndex={tabIndex} /&gt;
             );
         }
+        if (props.showCountOutOf) {
+            if (totalItems===0) {
+                msg = props.msgShowingNoItems;
+            }
+            else if (totalItems===1) {
+                msg = props.msgShowing + &#x27; &#x27; + props.msgOneItem;
+            }
+            else {
+                first = Math.max(0, ((page-1)*itemsPerPage)+1);
+                last = Math.min(totalItems, (page*itemsPerPage));
+                msg = props.msgShowing + &#x27; &#x27; + first + &#x27;-&#x27; + last + &#x27; &#x27; + props.msgOutOf + &#x27; &#x27; + totalItems;
+            }
+            countOutOf = (
+                &lt;div className=&quot;show-out-of&quot;&gt;
+                    &lt;div&gt;
+                        {msg}
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            );
+        }
+
         return (
             &lt;div className={classname} &gt;
-                {selectSizes}
-                {btnFirst}
-                {btnPrevious}
-                {btn1}
-                {btn2}
-                {btn3}
-                {btn4}
-                {btn5}
-                {btnNext}
-                {btnLast}
+                &lt;div className=&quot;paginator-btns&quot;&gt;
+                    {selectSizes}
+                    {btnFirst}
+                    {btnPrevious}
+                    {btn1}
+                    {btn2}
+                    {btn3}
+                    {btn4}
+                    {btn5}
+                    {btnNext}
+                    {btnLast}
+                &lt;/div&gt;
+                {countOutOf}
             &lt;/div&gt;
         );
     }
+}
 
-});
+Paginator.propTypes = {
+    /**
+     * A className for the component
+     *
+     * @property className
+     * @type String
+     * @since 15.0.1
+    */
+    className: PropTypes.string,
+
+    /**
+     * How many items are shown on a page. This value is needed to generate the pagebuttons.
+     * When not set, all items are supposed to be shown on a single page.
+     *
+     * @property itemsPerPage
+     * @type Number
+     * @since 15.0.0
+    */
+    itemsPerPage: PropTypes.number,
+
+    /**
+     * The callback whenever a page is changed.
+     * The callback gets 1 argument --&gt; newPage, which is the pagenumber (starting at 1).
+     *
+     * @property onChange
+     * @type Function
+     * @required
+     * @since 15.0.0
+    */
+    onChange: PropTypes.func.isRequired,
+
+    /**
+     * The callback whenever a page is changed.
+     * The callback get1 1 argument --&gt; newIndex, which is the selected index within the property &#x60;pageSizes&#x60;.
+     *
+     * @property onChangePageSize
+     * @type Function
+     * @since 15.0.0
+    */
+    onChangePageSize: PropTypes.func,
+
+    /**
+     * The current pagenumber (starting at 1).
+     *
+     * @property page
+     * @type Number
+     * @required
+     * @since 15.0.0
+    */
+    page: PropTypes.number.isRequired,
+
+    /**
+     * Whether &#x60;showing count out of total&#x60; is shown.
+     *
+     * @property showCountOutOf
+     * @type Boolean
+     * @since 15.1.0
+    */
+    showCountOutOf: PropTypes.bool,
+
+    /**
+     * The pageSizes. In order to wotk well with &#x60;onChangePageSize&#x60;, it is recomended to fill this array with &#x60;numbers&#x60;.
+     * In this case, the callback can pick up the number straight ahead and pass it into &#x60;itemsPerPage&#x60; at once.
+     *
+     * @property pageSizes
+     * @type Array
+     * @since 15.0.0
+    */
+    pageSizes: PropTypes.array,
+
+    /**
+     * The tabIndex. All sub-items will get this same tabindex.
+     *
+     * @property tabIndex
+     * @type Number
+     * @since 15.0.0
+    */
+    tabIndex: PropTypes.number,
+
+    /**
+     * The Total itemcount of the array where the paginator relates to. This number is used to calculate and generate the buttons.
+     *
+     * @property totalItems
+     * @type Number
+     * @required
+     * @since 15.0.0
+    */
+    totalItems: PropTypes.number.isRequired,
+
+    /**
+     * The message before the &#x60;itemsPerPage&#x60; selector
+     *
+     * @property msgItemsPerPage
+     * @type String
+     * @since 15.1.0
+    */
+    msgItemsPerPage: PropTypes.string,
+
+    /**
+     * The &#x60;one-item&#x60;-message of: &#x60;showing 1 item&#x60;.
+     * Only available when &#x60;showCountOutOf&#x60;===true.
+     *
+     * @property msgOneItem
+     * @type String
+     * @since 15.1.3
+    */
+    msgOneItem: PropTypes.string,
+
+    /**
+     * The &#x60;showing&#x60;-message of: &#x60;showing count out of total&#x60;.
+     * Only available when &#x60;showCountOutOf&#x60;===true.
+     *
+     * @property msgOutOf
+     * @type String
+     * @since 15.1.0
+    */
+    msgOutOf: PropTypes.string,
+
+    /**
+     * The &#x60;out of&#x60;-message of: &#x60;showing count out of total&#x60;.
+     * Only available when &#x60;showCountOutOf&#x60;===true.
+     *
+     * @property msgShowing
+     * @type String
+     * @since 15.1.0
+    */
+    msgShowing: PropTypes.string,
+
+    /**
+     * The &#x60;showing no items&#x60;-message: the message when there are no items.
+     * Only available when &#x60;showCountOutOf&#x60;===true.
+     *
+     * @property msgShowingNoItems
+     * @type String
+     * @since 15.1.3
+    */
+    msgShowingNoItems: PropTypes.string
+};
+
+Paginator.defaultProps = {
+    msgItemsPerPage: &#x27;items per page&#x27;,
+    msgOutOf: &#x27;out of&#x27;,
+    msgShowing: &#x27;showing&#x27;,
+    msgShowingNoItems: &#x27;no items&#x27;,
+    msgOneItem: &#x27;1 item&#x27;,
+    showCountOutOf: false
+};
 
 module.exports = Paginator;
 

@@ -55,131 +55,51 @@
     "classitems": [
         {
             "file": "lib/component.jsx",
-            "line": 28,
-            "description": "How many items are shown on a page. This value is needed to generate the pagebuttons.\nWhen not set, all items are supposed to be shown on a single page.",
-            "itemtype": "property",
-            "name": "itemsPerPage",
-            "type": "Number",
-            "since": "15.0.0",
-            "class": "Component",
-            "module": "component.jsx"
-        },
-        {
-            "file": "lib/component.jsx",
-            "line": 38,
-            "description": "The message before the `itemsPerPage` selector",
-            "itemtype": "property",
-            "name": "itemsPerPageMsg",
-            "type": "String",
-            "since": "15.0.0",
-            "class": "Component",
-            "module": "component.jsx"
-        },
-        {
-            "file": "lib/component.jsx",
-            "line": 47,
-            "description": "The callback whenever a page is changed.\nThe callback gets 1 argument --> newPage, which is the pagenumber (starting at 1).",
-            "itemtype": "property",
-            "name": "onChange",
-            "type": "Function",
-            "required": 1,
-            "since": "15.0.0",
-            "class": "Component",
-            "module": "component.jsx"
-        },
-        {
-            "file": "lib/component.jsx",
-            "line": 58,
-            "description": "The callback whenever a page is changed.\nThe callback get1 1 argument --> newIndex, which is the selected index within the property `pageSizes`.",
-            "itemtype": "property",
-            "name": "onChangePageSize",
-            "type": "Function",
-            "since": "15.0.0",
-            "class": "Component",
-            "module": "component.jsx"
-        },
-        {
-            "file": "lib/component.jsx",
-            "line": 68,
-            "description": "The current pagenumber (starting at 1).",
-            "itemtype": "property",
-            "name": "page",
-            "type": "Number",
-            "required": 1,
-            "since": "15.0.0",
-            "class": "Component",
-            "module": "component.jsx"
-        },
-        {
-            "file": "lib/component.jsx",
-            "line": 78,
-            "description": "The pageSizes. In order to wotk well with `onChangePageSize`, it is recomended to fill this array with `numbers`.\nIn this case, the callback can pick up the number straight ahead and pass it into `itemsPerPage` at once.",
-            "itemtype": "property",
-            "name": "pageSizes",
-            "type": "Array",
-            "since": "15.0.0",
-            "class": "Component",
-            "module": "component.jsx"
-        },
-        {
-            "file": "lib/component.jsx",
-            "line": 88,
-            "description": "The tabIndex. All sub-items will get this same tabindex.",
-            "itemtype": "property",
-            "name": "tabIndex",
-            "type": "Number",
-            "since": "15.0.0",
-            "class": "Component",
-            "module": "component.jsx"
-        },
-        {
-            "file": "lib/component.jsx",
-            "line": 97,
-            "description": "The Total itemcount of the array where the paginator relates to. This number is used to calculate and generate the buttons.",
-            "itemtype": "property",
-            "name": "totalItems",
-            "type": "Number",
-            "required": 1,
-            "since": "15.0.0",
-            "class": "Component",
-            "module": "component.jsx"
-        },
-        {
-            "file": "lib/component.jsx",
-            "line": 108,
-            "description": "The initial props.",
-            "itemtype": "method",
-            "name": "getDefaultProps",
-            "return": {
-                "description": "Object"
-            },
-            "since": "15.0.0",
-            "class": "Component",
-            "module": "component.jsx"
-        },
-        {
-            "file": "lib/component.jsx",
-            "line": 121,
+            "line": 34,
             "description": "Will reset the current `page`, by calling the callback `props.onChange`.",
             "itemtype": "method",
             "name": "gotoPage",
+            "params": [
+                {
+                    "name": "page",
+                    "description": "the page that should be shown",
+                    "type": "Number"
+                },
+                {
+                    "name": "blur",
+                    "description": "whether to blur the button",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "e",
+                    "description": "the eventobject",
+                    "type": "Object"
+                }
+            ],
             "since": "15.0.0",
             "class": "Component",
             "module": "component.jsx"
         },
         {
             "file": "lib/component.jsx",
-            "line": 131,
+            "line": 50,
             "description": "Will set the `itemsPerPage`, by calling the callback `props.onChangePageSize`.",
             "itemtype": "method",
-            "name": "gotoPage",
+            "name": "changePageSize",
+            "params": [
+                {
+                    "name": "newIndex",
+                    "description": "the index of the array `this.props.pageSizes` that was selected",
+                    "type": "Number"
+                }
+            ],
             "since": "15.0.0",
             "class": "Component",
             "module": "component.jsx"
         },
         {
             "file": "lib/component.jsx",
-            "line": 141,
+            "line": 61,
             "description": "Renders the `select-sizes` Select-Component.",
             "itemtype": "method",
             "name": "renderSelectSizes",
@@ -192,7 +112,7 @@
         },
         {
             "file": "lib/component.jsx",
-            "line": 169,
+            "line": 89,
             "description": "React render-method --> renderes the Component.",
             "itemtype": "method",
             "name": "render",
@@ -200,6 +120,163 @@
                 "description": "ReactComponent"
             },
             "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 250,
+            "description": "A className for the component",
+            "itemtype": "property",
+            "name": "className",
+            "type": "String",
+            "since": "15.0.1",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 259,
+            "description": "How many items are shown on a page. This value is needed to generate the pagebuttons.\nWhen not set, all items are supposed to be shown on a single page.",
+            "itemtype": "property",
+            "name": "itemsPerPage",
+            "type": "Number",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 269,
+            "description": "The callback whenever a page is changed.\nThe callback gets 1 argument --> newPage, which is the pagenumber (starting at 1).",
+            "itemtype": "property",
+            "name": "onChange",
+            "type": "Function",
+            "required": 1,
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 280,
+            "description": "The callback whenever a page is changed.\nThe callback get1 1 argument --> newIndex, which is the selected index within the property `pageSizes`.",
+            "itemtype": "property",
+            "name": "onChangePageSize",
+            "type": "Function",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 290,
+            "description": "The current pagenumber (starting at 1).",
+            "itemtype": "property",
+            "name": "page",
+            "type": "Number",
+            "required": 1,
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 300,
+            "description": "Whether `showing count out of total` is shown.",
+            "itemtype": "property",
+            "name": "showCountOutOf",
+            "type": "Boolean",
+            "since": "15.1.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 309,
+            "description": "The pageSizes. In order to wotk well with `onChangePageSize`, it is recomended to fill this array with `numbers`.\nIn this case, the callback can pick up the number straight ahead and pass it into `itemsPerPage` at once.",
+            "itemtype": "property",
+            "name": "pageSizes",
+            "type": "Array",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 319,
+            "description": "The tabIndex. All sub-items will get this same tabindex.",
+            "itemtype": "property",
+            "name": "tabIndex",
+            "type": "Number",
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 328,
+            "description": "The Total itemcount of the array where the paginator relates to. This number is used to calculate and generate the buttons.",
+            "itemtype": "property",
+            "name": "totalItems",
+            "type": "Number",
+            "required": 1,
+            "since": "15.0.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 338,
+            "description": "The message before the `itemsPerPage` selector",
+            "itemtype": "property",
+            "name": "msgItemsPerPage",
+            "type": "String",
+            "since": "15.1.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 347,
+            "description": "The `one-item`-message of: `showing 1 item`.\nOnly available when `showCountOutOf`===true.",
+            "itemtype": "property",
+            "name": "msgOneItem",
+            "type": "String",
+            "since": "15.1.3",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 357,
+            "description": "The `showing`-message of: `showing count out of total`.\nOnly available when `showCountOutOf`===true.",
+            "itemtype": "property",
+            "name": "msgOutOf",
+            "type": "String",
+            "since": "15.1.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 367,
+            "description": "The `out of`-message of: `showing count out of total`.\nOnly available when `showCountOutOf`===true.",
+            "itemtype": "property",
+            "name": "msgShowing",
+            "type": "String",
+            "since": "15.1.0",
+            "class": "Component",
+            "module": "component.jsx"
+        },
+        {
+            "file": "lib/component.jsx",
+            "line": 377,
+            "description": "The `showing no items`-message: the message when there are no items.\nOnly available when `showCountOutOf`===true.",
+            "itemtype": "property",
+            "name": "msgShowingNoItems",
+            "type": "String",
+            "since": "15.1.3",
             "class": "Component",
             "module": "component.jsx"
         }

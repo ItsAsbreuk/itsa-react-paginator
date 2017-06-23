@@ -18,7 +18,6 @@ const changePage = newPage => {
 };
 
 const changePageSize = newIndex => {
-    console.warn(newIndex);
     let newItemsPerPage = pageSizes[newIndex];
     if (typeof newItemsPerPage==='number') {
         props.itemsPerPage = newItemsPerPage;
@@ -36,11 +35,11 @@ let props = {
     itemsPerPage: 10,
     page: 1,
     pageSizes: pageSizes,
+    showCountOutOf: true,
     totalItems: 1500
 };
 
 const renderPaginator = () => {
-    console.warn(props);
     ReactDOM.render(
         <Paginator {...props} />,
         document.getElementById("component-container")

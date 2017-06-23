@@ -21,9 +21,28 @@
         }
     }
 
+    .paginator-btns,
+    .show-out-of {
+        white-space: nowrap;
+        display: table-row;
+        float: right;
+        clear: both;
+    }
+
+    .show-out-of div {
+        text-align: right;
+        padding-top: 0.3em;
+        padding-right: 0.2em;
+    }
+
     .itsa-button {
         min-width: 2.5em;
         height: 2.5em;
         vertical-align: middle;
+
+        &.itsa-button-togglebtn {
+            min-width: 3em;
+        }
+
     }
 }
