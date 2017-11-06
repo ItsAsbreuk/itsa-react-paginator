@@ -1,6 +1,6 @@
 {
   "name": "itsa-react-paginator",
-  "version": "16.0.0",
+  "version": "16.0.5",
   "description": "React Paginator",
   "author": [
     {
@@ -31,13 +31,12 @@
     "lib": "./lib"
   },
   "dependencies": {
-    "itsa-react-select": "^16.0.0",
-    "itsa-react-togglebutton": "^16.0.0",
+    "itsa-react-select": "^16.0.6",
+    "itsa-react-togglebutton": "^16.0.6",
     "prop-types": "^15.5.10"
   },
   "peerDependencies": {
-    "react": ">=15",
-    "react-dom": ">=15"
+    "react": ">=15"
   },
   "devDependencies": {
     "babel-core": "^6.7.6",
